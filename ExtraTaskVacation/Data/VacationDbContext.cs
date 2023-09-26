@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ExtraTaskVacation.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using VacationTaskUppgift.Models;
 
 namespace ExtraTaskVacation.Data
 {
-    public class VacationDbContext : DbContext
+    public class VacationDbContext : IdentityDbContext
     {
         public VacationDbContext(DbContextOptions<VacationDbContext> options) : base(options)
         {
@@ -15,6 +17,8 @@ namespace ExtraTaskVacation.Data
         public DbSet<RequestVacationModel> RequestVacations { get; set; }
         public DbSet<VacationStatusModel> VacationStatuses { get; set; }
         public DbSet<VacationTypeModel> VacationTypes { get; set; }
+
+
 
     }
 }

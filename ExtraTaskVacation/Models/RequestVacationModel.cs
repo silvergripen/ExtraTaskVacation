@@ -7,8 +7,10 @@ namespace VacationTaskUppgift.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RequestVacId { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime DateStart { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime DateEnd { get; set; }
         [ForeignKey("VacationType")]
         public int FK_VacationType { get; set; }

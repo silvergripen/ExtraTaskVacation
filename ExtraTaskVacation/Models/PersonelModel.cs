@@ -18,11 +18,10 @@ namespace VacationTaskUppgift.Models
         [Required]
         public string Email { get; set; } = null!;
         [Required]
-        [MaxLength(50)]
         public bool IsAdmin { get; set; }
 
-        [ForeignKey("RequestVacation")]
-        public int FK_RequestVacationId { get; set; }
+        [ForeignKey("ActiveVacation")]
+        public int FK_ActiveVacationId { get; set; }
         public virtual ICollection<RequestVacationModel>? RequestVacations { get; set; }
     }
 }
