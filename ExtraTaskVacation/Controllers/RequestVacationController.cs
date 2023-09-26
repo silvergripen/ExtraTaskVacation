@@ -9,18 +9,21 @@ using ExtraTaskVacation.Data;
 using VacationTaskUppgift.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
 namespace ExtraTaskVacation.Controllers
 {
     public class RequestVacationController : Controller
     {
-        private readonly UserManager<PersonelModel> userManager;
+        private readonly UserManager<IdentityUser> userManager;
         private readonly VacationDbContext context;
+        private IHttpContextAccessor httpContextAccessor;
        
-        public RequestVacationController(VacationDbContext context, UserManager<PersonelModel> userManager)
+        public RequestVacationController(VacationDbContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
             this.userManager = userManager;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         // GET: RequestVacation
@@ -61,18 +64,17 @@ namespace ExtraTaskVacation.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Create([Bind("RequestVacId,DateStart,DateEnd,FK_VacationType,FK_Personel")] RequestVacationModel requestVacationModel)
         {
-            var user = await userManager.GetUserAsync(User);
-            var userId = user.Id;
-            if (ModelState.IsValid)
-            {
+            //var user = await userManager.GetUserAsync(HttpContext.User);
+                string currentUserId = userManager.GetUserId(HttpContext.User);
+                requestVacationModel.FK_Personel = currentUserId;
 
-                requestVacationModel.FK_Personel = userId;
                 context.Add(requestVacationModel);
                 await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+        
             ViewData["FK_VacationType"] = new SelectList(context.VacationTypes, "TypeId", "TypeId", requestVacationModel.FK_VacationType);
             return View(requestVacationModel);
         }
@@ -172,5 +174,6 @@ namespace ExtraTaskVacation.Controllers
         {
           return (context.RequestVacations?.Any(e => e.RequestVacId == id)).GetValueOrDefault();
         }
+
     }
 }

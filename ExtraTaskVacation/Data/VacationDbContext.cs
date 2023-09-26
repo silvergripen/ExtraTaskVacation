@@ -1,11 +1,12 @@
 ﻿using ExtraTaskVacation.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VacationTaskUppgift.Models;
 
 namespace ExtraTaskVacation.Data
 {
-    public class VacationDbContext : IdentityDbContext
+    public class VacationDbContext : IdentityDbContext<IdentityUser>
     {
         public VacationDbContext(DbContextOptions<VacationDbContext> options) : base(options)
         {

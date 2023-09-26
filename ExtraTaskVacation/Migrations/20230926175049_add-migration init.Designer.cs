@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExtraTaskVacation.Migrations
 {
     [DbContext(typeof(VacationDbContext))]
-    [Migration("20230923144351_init")]
-    partial class init
+    [Migration("20230926175049_add-migration init")]
+    partial class addmigrationinit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
